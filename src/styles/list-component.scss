@@ -1,9 +1,9 @@
-.list {
+:global(.list) {
   display: flex;
   flex-direction: column;
 }
 
-.list-block {
+:global(.list-block) {
   display: flex;
   flex-direction: column;
   // height: 100%;

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.scss';
 
 import PropTypes from 'prop-types';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className={classes.App}>
         {this.props.children}
       </div>
     );

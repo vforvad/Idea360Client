@@ -160,10 +160,12 @@ module.exports = {
             test: /\.css$/,
             use: [
               require.resolve('style-loader'),
-              {
+               {
                 loader: require.resolve('css-loader'),
                 options: {
                   importLoaders: 1,
+                  modules: true,
+                  localIdentName: '[name]__[local]___[hash:base64:5]'
                 },
               },
               {
@@ -173,6 +175,7 @@ module.exports = {
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
                   plugins: () => [
+                    require('postcss-nested'),
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
                       browsers: [
@@ -184,14 +187,26 @@ module.exports = {
                       flexbox: 'no-2009',
                     }),
                   ],
-                },
-              },
+                }
+              }
             ],
           },
           {
             test: /\.scss$/,
-            include: paths.appSrc,
-            loaders: ["style-loader", "css-loader", "sass-loader"]
+            use: [
+              'style-loader',
+              // 'css-loader',
+              {
+                loader: 'css-loader',
+                query: {
+                  modules: true,
+                  sourceMap: true,
+                  importLoaders: 2,
+                  localIdentName: '[name]__[local]___[hash:base64:5]'
+                }
+              },
+              'sass-loader'
+            ]
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
           // When you `import` an asset, you get its (virtual) filename.
