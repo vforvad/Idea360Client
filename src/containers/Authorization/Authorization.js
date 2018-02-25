@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
-
 import PropTypes from 'prop-types';
 
-class App extends Component {
+class Authorization extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="Authorization">
+        <h3>Authorzation</h3>
         {this.props.children}
       </div>
     );
   }
 }
 
-App.propTypes = {
+Authorization.propTypes = {
   children: PropTypes.node
 };
 
-export default App;
+export default Authorization;

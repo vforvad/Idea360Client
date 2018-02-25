@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import './App.css';
-
 import PropTypes from 'prop-types';
 
-class App extends Component {
+class Root extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="Root">
+        <h3>Root</h3>
         {this.props.children}
       </div>
     );
   }
 }
 
-App.propTypes = {
+Root.propTypes = {
   children: PropTypes.node
 };
 
-export default App;
+export default Root;
