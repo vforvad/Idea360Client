@@ -15,9 +15,9 @@ export default (
       <App>
         <Switch>
           {authorization}
-          <Route path="/">
+          <Route exact path="/">
             <Root>
-              <Route component={CompaniesList}></Route>
+              <Route component={CompaniesList} />
             </Root>
           </Route>
         </Switch>
