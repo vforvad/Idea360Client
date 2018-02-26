@@ -15,8 +15,6 @@ class SignIn extends Component {
     });
   }
 
-  
-
   handleSubmit = (event) => {
     event.preventDefault();
     console.log(this.state);
@@ -46,7 +44,7 @@ class SignIn extends Component {
             placeholder="Password" />
         </div>
         <div className="form-actions">
-          <button type="submit" className={CN('button', 'success')}>Submit</button>
+          <button type="submit" className={CN('button', 'success')}>Sign In</button>
         </div>
       </form>
     );
