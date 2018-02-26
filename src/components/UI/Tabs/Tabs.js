@@ -14,7 +14,7 @@ class Tabs extends Component {
       return <Tab text={tabs[item]} route={item} key={item} />
     });
     const parentClasses = classNames.map(item => classes[item]);
-    // console.log(classes, className, classes[className]);
+    
     return (
       <div className={CN(classes.Tabs, ...parentClasses)}>
         <ul className={classes.navbar}>

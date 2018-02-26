@@ -6,7 +6,7 @@ class SignUp extends Component {
   state = {
     email: '',
     password: '',
-    passwordConformation: ''
+    passwordConfirmation: ''
   };
 
   handleChange = (event) => {
