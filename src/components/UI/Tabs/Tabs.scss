@@ -1,0 +1,77 @@
+@import 'src/styles/variables.scss';
+
+%default-navbar {
+  display: flex;
+
+  li {
+    cursor: pointer;
+    box-sizing: border-box;
+
+    a {
+      position: relative;
+      padding: 16px 22px 12px;
+      display: block;
+      border-radius: 8px 8px 0 0;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: fontMiddleSize - 1;
+      letter-spacing: 1px;
+      margin-right: 4px;
+
+      &.active {
+        background-color: $lightblue_color;
+        color: white;
+        span {
+          background: none;
+        }
+      }
+
+      &:hover {
+        background-color: $blue_color;
+        color: white;
+      }
+    }
+  }
+}
+
+.Tabs {
+  ul {
+      list-style: none;
+  }
+
+  &.horizontal {
+    .navbar {
+      @extend %default-navbar;
+      flex-direction: row;
+    }
+  }
+
+  &.horizontal-underlined {
+    .navbar {
+      @extend %default-navbar;
+      flex-direction: row;
+
+      li {
+        a {
+          &.active {
+            background-color: transparent;
+            border-bottom: 2px solid $lightblue_color;
+            color: #333333;
+          }
+          &:hover {
+            background-color: transparent;
+            border-bottom: 2px solid $blue_color;
+            color: #333333;
+          }
+        }
+      }
+    }
+  }
+
+  &.vertical {
+    .navbar {
+      @extend %default-navbar;
+      flex-direction: column;
+    }
+  }
+}

@@ -8,8 +8,8 @@ import Tabs from '../../components/UI/Tabs/Tabs';
 
 class Authorization extends Component {
 
-
   render() {
+    console.log(classes);
     const tabs = {
       '/sign-in': 'Sign in',
       '/sign-up': 'Sign up'
@@ -19,7 +19,7 @@ class Authorization extends Component {
       <div className={CN(classes.Authorization)}>
         <div className={CN('card', classes.panel)}>
           <h3>Authorzation</h3>
-          <Tabs tabs={tabs} />
+          <Tabs tabs={tabs} className="horizontal-underlined" />
           {this.props.children}
         </div>
       </div>
