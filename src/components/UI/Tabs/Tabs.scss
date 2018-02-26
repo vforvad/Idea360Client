@@ -74,4 +74,10 @@
       flex-direction: column;
     }
   }
+
+  &.space-around {
+    .navbar {
+      justify-content: space-around;
+    }
+  }
 }

@@ -9,13 +9,14 @@ import Tab from './Item/Item';
 class Tabs extends Component {
 
   render() {
-    const { tabs, className } = this.props;
+    const { tabs, classNames } = this.props;
     const elements = Object.keys(tabs).map((item) => {
       return <Tab text={tabs[item]} route={item} key={item} />
     });
-    console.log(classes, className, classes[className]);
+    const parentClasses = classNames.map(item => classes[item]);
+    // console.log(classes, className, classes[className]);
     return (
-      <div className={CN(classes.Tabs, classes[className])}>
+      <div className={CN(classes.Tabs, ...parentClasses)}>
         <ul className={classes.navbar}>
           {elements}
         </ul>
@@ -26,7 +27,7 @@ class Tabs extends Component {
 
 Tabs.propTypes = {
   tabs: PropTypes.object.isRequired,
-  className: PropTypes.string
+  classNames: PropTypes.array
 };
 
 export default Tabs;

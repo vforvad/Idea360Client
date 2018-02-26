@@ -19,7 +19,7 @@ class Authorization extends Component {
       <div className={CN(classes.Authorization)}>
         <div className={CN('card', classes.panel)}>
           <h3>Authorzation</h3>
-          <Tabs tabs={tabs} className="horizontal-underlined" />
+          <Tabs tabs={tabs} classNames={['horizontal-underlined', 'space-around']} />
           {this.props.children}
         </div>
       </div>
