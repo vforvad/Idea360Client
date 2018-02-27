@@ -1,6 +1,8 @@
 import CN from 'classnames';
 
 import React, { Component } from 'react';
+
+import Input from '../../UI/Input/Input';
 import { required, isEmail } from '../../../utils/validations';
 
 class SignIn extends Component {
@@ -80,27 +82,29 @@ class SignIn extends Component {
     const { email, password} = this.state.signInForm.fields;
     const { valid } = this.state.signInForm;
     const emailErrors = this.state.signInForm.errors.email;
+    const passwordErrors = this.state.signInForm.errors.password;
 
     return (
       <form className={CN('form', 'vertical')} onSubmit={this.handleSubmit}>
         <div className="form-field">
-          <input
+          <Input
             type="text"
             className="field"
             name="email"
             value={email.value}
             onChange={this.handleChange}
-            placeholder="Email" />
-          <span>{emailErrors}</span>
-        </div>
+            placeholder="Email"
+            errors={emailErrors} />
+          </div>
         <div className="form-field">
-          <input
+          <Input
             type="password"
             className="field"
             name="password"
             value={password.value}
             onChange={this.handleChange}
-            placeholder="Password" />
+            placeholder="Password"
+            errors={passwordErrors} />
         </div>
         <div className="form-actions">
           <button type="submit" disabled={!valid} className={CN('button', 'success')}>Sign In</button>
