@@ -42,28 +42,14 @@ class SignIn extends Component {
     formElement.value = event.target.value;
     formElement.touched = true;
     formElement.validations.forEach(item => {
-      if (item.rule(formElement.value)) {
-        formElement.valid = true;
-      }
+      formElement.valid = item.rule(formElement.value);
     });
     form.fields[event.target.name] = formElement;
     form.valid = this.globalFormValidation(form);
-    console.log(form);
+    
     this.setState({
       signInForm: form
     });
-  }
-
-  validate(field, validations) {
-    let valid = field.valid;
-
-    validations.forEach(item => {
-      if (!item.rule(field.value)) {
-        valid = false;
-        return;
-      }
-    });
-    return valid;
   }
 
   globalFormValidation(form) {
@@ -71,12 +57,11 @@ class SignIn extends Component {
 
     Object.keys(form.fields).forEach(item => {
       const field = form.fields[item];
-      // console.log(field.valid);
-      if (field.valid) {
-        isValid = field.valid && isValid;
+
+      if (!field.valid) {
+        isValid = false;
       }
     });
-    // console.log(isValid);
     return isValid;
   }
 
