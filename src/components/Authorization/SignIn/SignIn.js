@@ -11,7 +11,8 @@ class SignIn extends Component {
         email: {
           value: '',
           validations: [
-            required
+            required,
+            isEmail
           ],
           valid: false,
           touched: false
@@ -38,15 +39,20 @@ class SignIn extends Component {
     const formElement = {
       ...form.fields[event.target.name]
     };
+    const errors = [];
 
     formElement.value = event.target.value;
     formElement.touched = true;
     formElement.validations.forEach(item => {
       formElement.valid = item.rule(formElement.value);
+      if (!formElement.valid) {
+        errors.push(item.message);
+      }
     });
     form.fields[event.target.name] = formElement;
+    form.errors[event.target.name] = errors;
     form.valid = this.globalFormValidation(form);
-    
+
     this.setState({
       signInForm: form
     });
