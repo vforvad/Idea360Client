@@ -1,6 +1,7 @@
 import React from 'react';
 
 import classes from './Input.scss';
+import Aux from  '../../../hoc/Aux/Aux';
 
 const input = (props) => {
   let label = null;
@@ -21,7 +22,7 @@ const input = (props) => {
   }
 
   return (
-    <div>
+    <Aux>
       {label}
       <input
         type={props.type}
@@ -31,7 +32,7 @@ const input = (props) => {
         className={classes[props.className]}
         onChange={props.onChange} />
       {errors}
-    </div>
+    </Aux>
   );
 };
 
