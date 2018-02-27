@@ -7,20 +7,23 @@ class SignIn extends Component {
 
   state = {
     signInForm: {
-      email: {
-        value: '',
-        validations: [
-          required,
-          isEmail
-        ],
-        valid: false,
-        touched: false
-      },
-      password: {
-        value: '',
-
-        valid: false,
-        touched: false
+      fields: {
+        email: {
+          value: '',
+          validations: [
+            required
+          ],
+          valid: false,
+          touched: false
+        },
+        password: {
+          value: '',
+          validations: [
+            required
+          ],
+          valid: false,
+          touched: false
+        }
       },
       valid: false,
       errors: {
@@ -33,31 +36,48 @@ class SignIn extends Component {
   handleChange = (event) => {
     const form = this.state.signInForm;
     const formElement = {
-      ...form[event.target.name]
+      ...form.fields[event.target.name]
     };
 
     formElement.value = event.target.value;
     formElement.touched = true;
-    form[event.target.name] = formElement;
+    formElement.validations.forEach(item => {
+      if (item.rule(formElement.value)) {
+        formElement.valid = true;
+      }
+    });
+    form.fields[event.target.name] = formElement;
+    form.valid = this.globalFormValidation(form);
+    console.log(form);
     this.setState({
       signInForm: form
     });
   }
 
-  handleValidation = (event) => {
-    const form = this.state.signInForm;
-    const formElement = {
-      ...form[event.target.name]
-    };
+  validate(field, validations) {
+    let valid = field.valid;
 
-    formElement.validations.forEach(item => {
-      if (!item.rule(formElement.value)) {
-        form.errors[event.target.name].push(item.message);
+    validations.forEach(item => {
+      if (!item.rule(field.value)) {
+        valid = false;
+        return;
       }
     });
-    this.setState({
-      signInForm: form
+    return valid;
+  }
+
+  globalFormValidation(form) {
+    let isValid = true;
+
+    Object.keys(form.fields).forEach(item => {
+      const field = form.fields[item];
+      // console.log(field.valid);
+      if (field.valid) {
+        isValid = field.valid && isValid;
+      }
     });
+    // console.log(isValid);
+    return isValid;
   }
 
   handleSubmit = (event) => {
@@ -66,9 +86,10 @@ class SignIn extends Component {
   }
 
   render() {
-    const { email, password } = this.state;
+    const { email, password} = this.state.signInForm.fields;
+    const { valid } = this.state.signInForm;
     const emailErrors = this.state.signInForm.errors.email;
-    console.log(emailErrors);
+
     return (
       <form className={CN('form', 'vertical')} onSubmit={this.handleSubmit}>
         <div className="form-field">
@@ -76,9 +97,8 @@ class SignIn extends Component {
             type="text"
             className="field"
             name="email"
-            value={email}
+            value={email.value}
             onChange={this.handleChange}
-            onBlur={this.handleValidation}
             placeholder="Email" />
           <span>{emailErrors}</span>
         </div>
@@ -87,12 +107,12 @@ class SignIn extends Component {
             type="password"
             className="field"
             name="password"
-            value={password}
+            value={password.value}
             onChange={this.handleChange}
             placeholder="Password" />
         </div>
         <div className="form-actions">
-          <button type="submit" className={CN('button', 'success')}>Sign In</button>
+          <button type="submit" disabled={!valid} className={CN('button', 'success')}>Sign In</button>
         </div>
       </form>
     );
