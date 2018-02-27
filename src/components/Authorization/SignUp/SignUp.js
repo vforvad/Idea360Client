@@ -4,14 +4,19 @@ import React, { Component } from 'react';
 class SignUp extends Component {
 
   state = {
-    email: '',
-    password: '',
-    passwordConfirmation: ''
+    signUpForm: {
+      email: '',
+      password: '',
+      passwordConfirmation: ''
+    }
   };
 
   handleChange = (event) => {
+    const form = this.state.signUpForm;
+
+    form[event.target.name] = event.target.value;
     this.setState({
-      [event.target.name]: event.target.value
+      signUpForm: form
     });
   }
 

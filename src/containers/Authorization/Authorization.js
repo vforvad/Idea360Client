@@ -9,7 +9,6 @@ import Tabs from '../../components/UI/Tabs/Tabs';
 class Authorization extends Component {
 
   render() {
-    console.log(classes);
     const tabs = {
       '/sign-in': 'Sign in',
       '/sign-up': 'Sign up'
