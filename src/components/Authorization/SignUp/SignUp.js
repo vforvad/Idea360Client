@@ -2,7 +2,7 @@ import CN from 'classnames';
 import React, { Component } from 'react';
 
 import Input from '../../UI/Input/Input';
-import { required, isEmail, passwordMatch } from '../../../utils/validations';
+import { handleInputChange, required, isEmail, passwordMatch } from '../../../utils/validations';
 
 class SignUp extends Component {
 
@@ -45,47 +45,7 @@ class SignUp extends Component {
   };
 
   handleChange = (event) => {
-    const form = this.state.signUpForm;
-    const formElement = {
-      ...form.fields[event.target.name]
-    };
-    const errors = [];
-
-    formElement.value = event.target.value;
-    formElement.touched = true;
-    formElement.validations.forEach(item => {
-      if (item.password) {
-          formElement.valid = item.rule(
-            formElement.value, form.fields.password.value
-          );
-      } else {
-        formElement.valid = item.rule(formElement.value);
-      }
-
-      if (!formElement.valid) {
-        errors.push(item.message);
-      }
-    });
-    form.fields[event.target.name] = formElement;
-    form.errors[event.target.name] = errors;
-    form.valid = this.globalFormValidation(form);
-
-    this.setState({
-      signUpForm: form
-    });
-  }
-
-  globalFormValidation(form) {
-    let isValid = true;
-
-    Object.keys(form.fields).forEach(item => {
-      const field = form.fields[item];
-
-      if (!field.valid) {
-        isValid = false;
-      }
-    });
-    return isValid;
+    handleInputChange(this, event, 'signUpForm');
   }
 
   handleSubmit = (event) => {
