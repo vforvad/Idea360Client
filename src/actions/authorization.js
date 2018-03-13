@@ -1,13 +1,14 @@
 import axios from 'utils/axios';
 
-export const signIn = (user) => {
-  return (dispatch) => {
-    axios.post('/sign_in', { ...user })
+export const signUp = (user) => {
+  // return (dispatch) => {
+    console.log(...user)
+    axios.post('/registrations', { ...user })
       .then(response => {
         console.log(response);
       })
       .catch(error => {
         console.log(error);
       });
-  };
+  // };
 }

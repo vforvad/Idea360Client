@@ -1,6 +1,8 @@
 import CN from 'classnames';
 import React, { Component } from 'react';
 
+import { signUp } from 'actions/authorization';
+
 import Input from '../../UI/Input/Input';
 import { handleInputChange, required, isEmail, passwordMatch } from '../../../utils/validations';
 
@@ -50,7 +52,14 @@ class SignUp extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
+    const form = this.state.signUpForm.fields;
+    const params = {
+      email: form.email.value,
+      password: form.password.value,
+      password_confirmation: form.passwordConfirmation.value
+    };
+    console.log(signUp);
+    signUp(params);
   }
 
   render() {

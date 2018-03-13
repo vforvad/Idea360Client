@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
   };
 } else {
   config = {
-    baseURL: 'http://dockerhost:5000'
+    baseURL: 'http://dockerhost:5000/api/v1'
   }
 }
 
