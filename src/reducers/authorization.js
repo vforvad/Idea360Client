@@ -1,4 +1,4 @@
-import * as authorizationTypes from 'actionTypes';
+import actionTypes from 'actionTypes';
 
 const initialState = {
   signInErrors: {},
@@ -8,17 +8,17 @@ const initialState = {
 
 const reducer = (state = initialState, action ) => {
   switch (action.type) {
-    case authorizationTypes.SIGN_IN_ERRORS:
+    case actionTypes.SIGN_IN_ERRORS:
       return {
         ...state,
         signInErrors: action.payload
       };
-    case authorizationTypes.SIGN_UP_ERRORS:
+    case actionTypes.SIGN_UP_ERRORS:
       return {
         ...state,
         signUpErrors: action.payload
       };
-    case authorizationTypes.CURRENT_USER:
+    case actionTypes.CURRENT_USER:
       return {
         ...state,
         currentUser: action.payload,

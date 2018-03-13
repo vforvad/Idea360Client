@@ -1,5 +1,6 @@
 import * as authorizationTypes from './authorization';
 
-export default (
-  authorizationTypes
-);
+console.log(...authorizationTypes);
+export default {
+  ...authorizationTypes 
+};
