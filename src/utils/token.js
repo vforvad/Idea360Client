@@ -1,9 +1,10 @@
 export const TOKEN_NAME = 'Authorization';
+const localToken = 'Idea360token';
 
 export const setToken = (token) => {
-  localStorage.setItem(TOKEN_NAME, token);
+  localStorage.setItem(localToken, token);
 };
 
 export const getToken = () => {
-  return localStorage.getItem(TOKEN_NAME);
+  return localStorage.getItem(localToken);
 };
