@@ -29,7 +29,7 @@ class App extends Component {
 }
 
 App.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   history: PropTypes.shape({
     replace: PropTypes.func,
   }),
@@ -40,6 +40,7 @@ App.defaultProps = {
   history: {
     replace: () => {},
   },
+  children: [],
   onCurrentUser: () => {},
 };
 

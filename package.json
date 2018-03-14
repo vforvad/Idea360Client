@@ -61,6 +61,8 @@
     "test": "NODE_PATH=./src node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
@@ -68,6 +70,7 @@
     "eslint-rules-best-practices": "^1.0.0",
     "eslint-rules-style": "^1.0.3",
     "eslint-rules-variables": "^1.0.0",
+    "jest-localstorage-mock": "^2.2.0",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6"
   },
@@ -76,7 +79,8 @@
       "src/**/*.{js,jsx,mjs}"
     ],
     "setupFiles": [
-      "<rootDir>/config/polyfills.js"
+      "<rootDir>/config/polyfills.js",
+      "jest-localstorage-mock"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
