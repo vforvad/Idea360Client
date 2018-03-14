@@ -2,21 +2,21 @@ import React, { Component } from 'react';
 import classes from './App.scss';
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
-
 import { currentUser } from 'actions/authorization';
+
+import { getToken } from 'utils/token';
 
 import PropTypes from 'prop-types';
 
 class App extends Component {
 
-  componentWillMount() {
-    console.log(this.props);
-  }
+  componentDidMount() {
+    const token = getToken();
 
-  componentWillReceiveProps(props) {
-    console.log(props)
-    if (props.currentUser) {
-      this.props.history.replace('/companies');
+    if (token) {;
+      this.props.onCurrentUser();
+    } else {
+      this.props.history.replace('/auth/sign-in');
     }
   }
 
@@ -44,15 +44,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-/**
- * Mapping application state to component's properties
- * @param  {Object} state Application state
- * @return {Object} Mapped properties
- */
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.authorization.currentUser
-  };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(null, mapDispatchToProps)(App));

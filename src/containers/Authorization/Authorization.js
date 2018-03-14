@@ -3,10 +3,19 @@ import classes from './Authorization.scss';
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
 
 import Tabs from '../../components/UI/Tabs/Tabs';
 
 class Authorization extends Component {
+
+  componentWillReceiveProps(props) {
+
+    if (props.currentUser) {
+      this.props.history.replace('/companies');
+    }
+  }
 
   render() {
     const tabs = {
@@ -27,7 +36,19 @@ class Authorization extends Component {
 }
 
 Authorization.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
+  history: PropTypes.object
 };
 
-export default Authorization;
+/**
+ * Mapping application state to component's properties
+ * @param  {Object} state Application state
+ * @return {Object} Mapped properties
+ */
+const mapStateToProps = (state) => {
+  return {
+    currentUser: state.authorization.currentUser
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(Authorization));
