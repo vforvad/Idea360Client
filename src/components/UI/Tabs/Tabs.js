@@ -20,7 +20,7 @@ const tabsList = ({ tabs, classNames }) => {
 };
 
 tabsList.propTypes = {
-  tabs: PropTypes.shape.isRequired,
+  tabs: PropTypes.shape({}).isRequired,
   classNames: PropTypes.arrayOf(PropTypes.string),
 };
 

@@ -30,12 +30,16 @@ class App extends Component {
 
 App.propTypes = {
   children: PropTypes.node.isRequired,
-  history: PropTypes.shape,
+  history: PropTypes.shape({
+    replace: PropTypes.func,
+  }),
   onCurrentUser: PropTypes.func,
 };
 
 App.defaultProps = {
-  history: {},
+  history: {
+    replace: () => {},
+  },
   onCurrentUser: () => {},
 };
 

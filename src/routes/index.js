@@ -9,6 +9,7 @@ import authorization from './authorization';
 import Root from '../containers/Root/Root';
 import CompaniesList from '../containers/Companies/List/CompaniesList';
 
+
 export default (
   <Provider store={store}>
     <ConnectedRouter history={history}>

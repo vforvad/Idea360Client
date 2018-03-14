@@ -1,13 +1,14 @@
 import React from 'react';
-
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const item = ({ route, active, text }) => (
+import classes from '../Tabs.scss';
+
+const item = ({ route, text }) => (
   <li>
     <NavLink
       to={route}
-      activeClassName={active}
+      activeClassName={classes.active}
     >
       {text}
     </NavLink>
@@ -16,13 +17,11 @@ const item = ({ route, active, text }) => (
 
 item.defaultProps = {
   route: '',
-  active: '',
   text: '',
 };
 
 item.propTypes = {
   route: PropTypes.string,
-  active: PropTypes.string,
   text: PropTypes.string,
 };
 

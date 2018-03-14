@@ -35,13 +35,14 @@ class Authorization extends Component {
 
 Authorization.propTypes = {
   children: PropTypes.node,
-  history: PropTypes.shape,
-  currentUser: PropTypes.shape,
+  history: PropTypes.shape({
+    replace: PropTypes.func.isRequired,
+  }).isRequired,
+  currentUser: PropTypes.shape({}),
 };
 
 Authorization.defaultProps = {
   children: [],
-  history: {},
   currentUser: {},
 };
 
