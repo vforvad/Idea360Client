@@ -1,6 +1,9 @@
 import CN from 'classnames';
 
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { signIn } from 'actions/authorization';
 
 import Input from '../../UI/Input/Input';
 import { required, isEmail } from '../../../utils/validations';
@@ -75,7 +78,12 @@ class SignIn extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(this.state);
+    const form = this.state.signInForm.fields;
+    const params = {
+      email: form.email.value,
+      password: form.password.value
+    };
+    this.props.onSignIn(params);
   }
 
   render() {
@@ -114,4 +122,26 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+/**
+ * Mapping dispatched functions to component's properties
+ * @param  {Object} dispatch Application dispatch function
+ * @return {Object} Mapped functions
+ */
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSignIn: ( user ) => dispatch(signIn(user))
+  };
+};
+
+/**
+ * Mapping application state to component's properties
+ * @param  {Object} state Application state
+ * @return {Object} Mapped properties
+ */
+const mapStateToProps = (state) => {
+  return {
+    signInErrors: state.authorization.signInErrors
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

@@ -11,13 +11,13 @@ const instance = axios.create({
   }
 });
 
-axios.interceptors.request.use((config) => {
+instance.interceptors.request.use((config) => {
   const token = getToken();
-
+  
   if (token) {
     config.headers[TOKEN_NAME] = token;
   }
-  
+
   return config;
 });
 
