@@ -1,6 +1,6 @@
 import React from 'react'
 import { Provider } from 'react-redux'
-import { Route, Switch } from 'react-router';
+import { Route, Redirect, Switch } from 'react-router';
 import { ConnectedRouter } from 'react-router-redux'
 import store, { history } from '../store'
 
@@ -14,12 +14,13 @@ export default (
     <ConnectedRouter history={history}>
       <App>
         <Switch>
+          <Redirect from="/" to="/companies" exact />
           {authorization}
-          <Route exact path="/">
-            <Root>
-              <Route component={CompaniesList} />
-            </Root>
-          </Route>
+          <Root>
+            <Switch>
+              <Route path="/companies" component={CompaniesList} />
+            </Switch>
+          </Root>
         </Switch>
       </App>
     </ConnectedRouter>

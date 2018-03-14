@@ -10,8 +10,8 @@ class Authorization extends Component {
 
   render() {
     const tabs = {
-      '/sign-in': 'Sign in',
-      '/sign-up': 'Sign up'
+      '/auth/sign-in': 'Sign in',
+      '/auth/sign-up': 'Sign up'
     };
 
     return (

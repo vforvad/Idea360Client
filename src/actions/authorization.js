@@ -1,15 +1,15 @@
 import axios from 'utils/axios';
 
+import actionTypes from 'actionTypes';
 import { setToken } from 'utils/token';
 
 export const currentUser = () => {
   return (dispatch) => {
     axios.get('/users/current')
       .then(response => {
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
+        dispatch({
+          type: actionTypes.CURRENT_USER, payload: response.data.current_user
+        });
       });
   }
 };
