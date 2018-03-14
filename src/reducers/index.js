@@ -4,5 +4,5 @@ import authorization from './authorization';
 
 export default combineReducers({
   authorization,
-  routing: routerReducer
+  routing: routerReducer,
 });

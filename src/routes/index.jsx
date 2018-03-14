@@ -1,8 +1,8 @@
-import React from 'react'
-import { Provider } from 'react-redux'
+import React from 'react';
+import { Provider } from 'react-redux';
 import { Route, Redirect, Switch } from 'react-router';
-import { ConnectedRouter } from 'react-router-redux'
-import store, { history } from '../store'
+import { ConnectedRouter } from 'react-router-redux';
+import store, { history } from '../store';
 
 import App from '../App';
 import authorization from './authorization';

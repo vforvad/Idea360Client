@@ -1,13 +1,12 @@
 import CN from 'classnames';
 import React, { Component } from 'react';
 
-import { signUp } from 'actions/authorization';
+import { signUp } from '../../../actions/authorization';
 
 import Input from '../../UI/Input/Input';
 import { handleInputChange, required, isEmail, passwordMatch } from '../../../utils/validations';
 
 class SignUp extends Component {
-
   state = {
     signUpForm: {
       fields: {
@@ -15,35 +14,35 @@ class SignUp extends Component {
           value: '',
           validations: [
             required,
-            isEmail
+            isEmail,
           ],
           valid: false,
-          touched: false
+          touched: false,
         },
         password: {
           value: '',
           validations: [
-            required
+            required,
           ],
           valid: false,
-          touched: false
+          touched: false,
         },
         passwordConfirmation: {
           value: '',
           validations: [
             required,
-            passwordMatch
+            passwordMatch,
           ],
           valid: false,
-          touched: false
-        }
+          touched: false,
+        },
       },
       valid: false,
       errors: {
         email: [],
-        password: []
-      }
-    }
+        password: [],
+      },
+    },
   };
 
   handleChange = (event) => {
@@ -56,9 +55,8 @@ class SignUp extends Component {
     const params = {
       email: form.email.value,
       password: form.password.value,
-      password_confirmation: form.passwordConfirmation.value
+      password_confirmation: form.passwordConfirmation.value,
     };
-    console.log(signUp);
     signUp(params);
   }
 
@@ -79,7 +77,8 @@ class SignUp extends Component {
             value={email.value}
             onChange={this.handleChange}
             placeholder="Email"
-            errors={emailErrors} />
+            errors={emailErrors}
+          />
         </div>
         <div className="form-field">
           <Input
@@ -89,7 +88,8 @@ class SignUp extends Component {
             value={password.value}
             onChange={this.handleChange}
             placeholder="Password"
-            errors={passwordErrors} />
+            errors={passwordErrors}
+          />
         </div>
         <div className="form-field">
           <Input
@@ -99,13 +99,15 @@ class SignUp extends Component {
             value={passwordConfirmation.value}
             onChange={this.handleChange}
             placeholder="Password Confirmation"
-            errors={passwordConfirmationErrors} />
+            errors={passwordConfirmationErrors}
+          />
         </div>
         <div className="form-actions">
           <button
             type="submit"
             disabled={!valid}
-            className={CN('button', 'success')}>
+            className={CN('button', 'success')}
+          >
             Sign Up
           </button>
         </div>

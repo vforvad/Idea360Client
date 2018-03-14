@@ -7,18 +7,18 @@ const instance = axios.create({
   baseURL: config.baseURL,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
-  }
+    Accept: 'application/json',
+  },
 });
 
-instance.interceptors.request.use((config) => {
+instance.interceptors.request.use((req) => {
   const token = getToken();
-  
+
   if (token) {
-    config.headers[TOKEN_NAME] = token;
+    req.headers[TOKEN_NAME] = token;
   }
 
-  return config;
+  return req;
 });
 
 export default instance;

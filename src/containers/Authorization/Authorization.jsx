@@ -1,17 +1,15 @@
-import CN from 'classnames';
-import classes from './Authorization.scss';
-
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+
+import CN from 'classnames';
+import classes from './Authorization.scss';
 
 import Tabs from '../../components/UI/Tabs/Tabs';
 
 class Authorization extends Component {
-
   componentWillReceiveProps(props) {
-
     if (props.currentUser) {
       this.props.history.replace('/companies');
     }
@@ -20,7 +18,7 @@ class Authorization extends Component {
   render() {
     const tabs = {
       '/auth/sign-in': 'Sign in',
-      '/auth/sign-up': 'Sign up'
+      '/auth/sign-up': 'Sign up',
     };
 
     return (
@@ -37,7 +35,14 @@ class Authorization extends Component {
 
 Authorization.propTypes = {
   children: PropTypes.node,
-  history: PropTypes.object
+  history: PropTypes.shape,
+  currentUser: PropTypes.shape,
+};
+
+Authorization.defaultProps = {
+  children: [],
+  history: {},
+  currentUser: {},
 };
 
 /**
@@ -45,10 +50,8 @@ Authorization.propTypes = {
  * @param  {Object} state Application state
  * @return {Object} Mapped properties
  */
-const mapStateToProps = (state) => {
-  return {
-    currentUser: state.authorization.currentUser
-  };
-};
+const mapStateToProps = state => ({
+  currentUser: state.authorization.currentUser,
+});
 
 export default withRouter(connect(mapStateToProps)(Authorization));

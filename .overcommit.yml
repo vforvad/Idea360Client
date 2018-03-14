@@ -1,0 +1,7 @@
+# .overcommit.yml (Add following comfigugration)
+PreCommit:
+  # Style Check for JavaScript
+  EsLint:
+    enabled: true
+    command: ['./node_modules/.bin/eslint', '-c', './.eslintrc.js']
+    include: '**/*.js'

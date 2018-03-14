@@ -1,29 +1,11 @@
 
-export const handleInputChange = (context, event, formName) => {
-  const form = context.state[formName];
-  const formElement = {
-    ...form.fields[event.target.name]
-  };
-
-  formElement.value = event.target.value;
-  formElement.touched = true;
-  form.fields[event.target.name] = formElement;
-  form.errors[event.target.name] = handleErrors(form, formElement);
-  form.valid = globalFormValidation(form);
-
-  context.setState({
-    [formName]: form
-  });
-}
-
+/* eslint-disable */
 const handleErrors = (form, formElement) => {
   const errors = [];
 
-  formElement.validations.forEach(item => {
+  formElement.validations.forEach((item) => {
     if (item.password) {
-        formElement.valid = item.rule(
-          formElement.value, form.fields.password.value
-        );
+      formElement.valid = item.rule(formElement.value, form.fields.password.value);
     } else {
       formElement.valid = item.rule(formElement.value);
     }
@@ -33,12 +15,13 @@ const handleErrors = (form, formElement) => {
     }
   });
   return errors;
-}
+};
+/* eslint-enable */
 
-const globalFormValidation  = (form) => {
+const globalFormValidation = (form) => {
   let isValid = true;
 
-  Object.keys(form.fields).forEach(item => {
+  Object.keys(form.fields).forEach((item) => {
     const field = form.fields[item];
 
     if (!field.valid) {
@@ -46,13 +29,28 @@ const globalFormValidation  = (form) => {
     }
   });
   return isValid;
-}
+};
+
+export const handleInputChange = (context, event, formName) => {
+  const form = context.state[formName];
+  const formElement = {
+    ...form.fields[event.target.name],
+  };
+
+  formElement.value = event.target.value;
+  formElement.touched = true;
+  form.fields[event.target.name] = formElement;
+  form.errors[event.target.name] = handleErrors(form, formElement);
+  form.valid = globalFormValidation(form);
+
+  context.setState({
+    [formName]: form,
+  });
+};
 
 export const required = {
-    rule: (val) => {
-      return val.trim() !== '';
-    },
-    message: 'Is required'
+  rule: val => val.trim() !== '',
+  message: 'Is required',
 };
 
 export const isEmail = {
@@ -60,13 +58,11 @@ export const isEmail = {
     const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     return pattern.test(val);
   },
-  message: 'Is not an email'
+  message: 'Is not an email',
 };
 
 export const passwordMatch = {
   password: true,
-  rule: (val, password) => {
-    return val === password;
-  },
-  message: 'Does not match the password'
-}
+  rule: (val, password) => val === password,
+  message: 'Does not match the password',
+};
