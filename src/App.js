@@ -9,6 +9,22 @@ import { getToken } from './utils/token';
 import { currentUser } from './actions/authorization';
 
 class App extends Component {
+  static propTypes = {
+    children: PropTypes.node,
+    history: PropTypes.shape({
+      replace: PropTypes.func,
+    }),
+    onCurrentUser: PropTypes.func,
+  };
+
+  static defaultProps = {
+    history: {
+      replace: () => {},
+    },
+    children: [],
+    onCurrentUser: () => {},
+  };
+
   componentDidMount() {
     const token = getToken();
 
@@ -27,22 +43,6 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  children: PropTypes.node,
-  history: PropTypes.shape({
-    replace: PropTypes.func,
-  }),
-  onCurrentUser: PropTypes.func,
-};
-
-App.defaultProps = {
-  history: {
-    replace: () => {},
-  },
-  children: [],
-  onCurrentUser: () => {},
-};
 
 /**
  * Mapping dispatched functions to component's properties
