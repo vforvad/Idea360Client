@@ -9,6 +9,19 @@ import classes from './Authorization.scss';
 import Tabs from '../../components/UI/Tabs/Tabs';
 
 class Authorization extends Component {
+  static propTypes = {
+    children: PropTypes.node,
+    history: PropTypes.shape({
+      replace: PropTypes.func.isRequired,
+    }).isRequired,
+    currentUser: PropTypes.shape({}),
+  };
+
+  static defaultProps = {
+    children: [],
+    currentUser: {},
+  };
+
   componentWillReceiveProps(props) {
     if (props.currentUser) {
       this.props.history.replace('/companies');
@@ -32,19 +45,6 @@ class Authorization extends Component {
     );
   }
 }
-
-Authorization.propTypes = {
-  children: PropTypes.node,
-  history: PropTypes.shape({
-    replace: PropTypes.func.isRequired,
-  }).isRequired,
-  currentUser: PropTypes.shape({}),
-};
-
-Authorization.defaultProps = {
-  children: [],
-  currentUser: {},
-};
 
 /**
  * Mapping application state to component's properties
