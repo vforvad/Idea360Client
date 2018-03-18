@@ -5,7 +5,7 @@ import configureStore from 'redux-mock-store';
 import Adapter from 'enzyme-adapter-react-16';
 // import jest from 'jest';
 
-import SignIn from './SignIn';
+import { SignIn } from './SignIn';
 // import { store } from '../../../store';
 
 configure({ adapter: new Adapter() });
@@ -13,17 +13,22 @@ configure({ adapter: new Adapter() });
 describe('<SignIn />', () => {
   const initialState = { authorization: { signInErrors: {}, currentUser: null } };
   const mockStore = configureStore([]);
+  const loginMock = jest.fn();
+  const props = {
+    onSignIn: loginMock,
+    store: null,
+  };
 
   let providerWrapper;
   let store;
 
   beforeEach(() => {
     store = mockStore(initialState);
-
+    props.store = store;
     /* eslint-disable */
     providerWrapper = mount(
       <Provider store={store}>
-        <SignIn />
+        <SignIn {...props} />
       </Provider>
     );
     /* eslint-enable */
@@ -64,10 +69,6 @@ describe('<SignIn />', () => {
     });
 
     it('submit the form', () => {
-      // const loginMock = jest.fn();
-      //
-      // providerWrapper.setProps({ onSignIn: loginMock });
-
       providerWrapper.find('input[name="email"]').at(1).simulate('change', {
         target: {
           name: 'email', value: 'text@example.com',
@@ -80,8 +81,7 @@ describe('<SignIn />', () => {
       });
 
       providerWrapper.find('form').simulate('submit');
-      // expect(loginMock).toHaveBeenCalled();
-      expect(store.dispatch).toHaveBeenCalled();
+      expect(loginMock).toHaveBeenCalled();
     });
   });
 });

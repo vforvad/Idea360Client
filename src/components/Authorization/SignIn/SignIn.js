@@ -9,7 +9,7 @@ import { signIn } from '../../../actions/authorization';
 import Input from '../../UI/Input/Input';
 import { required, isEmail } from '../../../utils/validations';
 
-class SignIn extends Component {
+export class SignIn extends Component {
   static propTypes = {
     onSignIn: PropTypes.func.isRequired,
   };
