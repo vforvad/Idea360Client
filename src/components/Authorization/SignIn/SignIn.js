@@ -10,6 +10,10 @@ import Input from '../../UI/Input/Input';
 import { required, isEmail } from '../../../utils/validations';
 
 class SignIn extends Component {
+  static propTypes = {
+    onSignIn: PropTypes.func.isRequired,
+  };
+
   state = {
     signInForm: {
       fields: {
@@ -123,10 +127,6 @@ class SignIn extends Component {
     );
   }
 }
-
-SignIn.propTypes = {
-  onSignIn: PropTypes.func.isRequired,
-};
 
 /**
  * Mapping dispatched functions to component's properties
