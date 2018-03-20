@@ -1,11 +1,11 @@
 import React from 'react';
-import { configure, mount } from 'enzyme';
+import { configure, mount, shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import Adapter from 'enzyme-adapter-react-16';
 // import jest from 'jest';
-
-import { SignIn } from './SignIn';
+import baseStore from '../../../store';
+import ConnectedSignIn, { SignIn } from './SignIn';
 // import { store } from '../../../store';
 
 configure({ adapter: new Adapter() });
@@ -82,6 +82,22 @@ describe('<SignIn />', () => {
 
       providerWrapper.find('form').simulate('submit');
       expect(loginMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('errors', () => {
+    let wrapper;
+    props.store = baseStore;
+    beforeEach(() => {
+      wrapper = shallow(<ConnectedSignIn store={baseStore} onSignIn={loginMock} />);
+    });
+
+    it('save to props', () => {
+      const signInErrors = { email: ['Is not present'] };
+      baseStore.dispatch({ type: 'SIGN_IN_ERRORS', payload: signInErrors });
+      wrapper.update();
+
+      expect(wrapper.props().signInErrors).toEqual(signInErrors);
     });
   });
 });

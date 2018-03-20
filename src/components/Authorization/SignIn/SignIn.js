@@ -12,6 +12,14 @@ import { required, isEmail } from '../../../utils/validations';
 export class SignIn extends Component {
   static propTypes = {
     onSignIn: PropTypes.func.isRequired,
+    signInErrors: PropTypes.shape({
+      email: PropTypes.arrayOf(PropTypes.string),
+      password: PropTypes.arrayOf(PropTypes.string),
+    }),
+  };
+
+  static defaultProps = {
+    signInErrors: {},
   };
 
   state = {
@@ -93,8 +101,8 @@ export class SignIn extends Component {
   render() {
     const { email, password } = this.state.signInForm.fields;
     const { valid } = this.state.signInForm;
-    const emailErrors = this.state.signInForm.errors.email;
-    const passwordErrors = this.state.signInForm.errors.password;
+    const emailErrors = this.props.signInErrors.email;
+    const passwordErrors = this.props.signInErrors.password;
 
     return (
       <form className={CN('form', 'vertical')} onSubmit={this.handleSubmit}>
