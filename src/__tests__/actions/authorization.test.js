@@ -6,7 +6,7 @@ import actionTypes from '../../actionTypes';
 import axios from '../../utils/axios';
 import config from '../../utils/environment';
 import {
-  signIn, signUp,
+  signIn, signUp, currentUser,
 } from '../../actions/authorization';
 
 const middlewares = [thunk];
@@ -111,6 +111,25 @@ describe('Authorization actions', () => {
             expect(store.getActions()).toEqual(expectedActions);
           });
       });
+    });
+  });
+
+  describe('#currentUser', () => {
+    it('receives CURRENT_USER action', () => {
+      const store = mockStore({});
+      const currentUserParams = { current_user: { email: 'example@test.com' } };
+
+      const expectedActions = [
+        { type: actionTypes.CURRENT_USER, payload: currentUserParams.current_user },
+      ];
+      nock(config.baseURL)
+        .get('/users/current')
+        .reply(200, currentUserParams);
+
+      return store.dispatch(currentUser())
+        .then(() => {
+          expect(store.getActions()).toEqual(expectedActions);
+        });
     });
   });
 });
