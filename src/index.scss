@@ -1,0 +1,29 @@
+@import './styles/variables.scss';
+@import './styles/card.scss';
+@import './styles/form.scss';
+@import './styles/tabs.scss';
+@import './styles/list-component.scss';
+
+html, body {
+  height: 100%;
+}
+
+h2 {
+  margin: 0px;
+  padding: 0px;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+body {
+  padding: 0px;
+  margin: 0px;
+  background-color: $theme_white;
+}
+
+textarea {
+  resize: none;
+}
