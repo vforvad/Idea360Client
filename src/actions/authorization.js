@@ -16,8 +16,8 @@ export const signIn = user => dispatch => axios.post('/authorizations', { ...use
     dispatch({ type: actionTypes.SIGN_IN, payload: response.data.token });
     dispatch(currentUser());
   })
-  .catch((response) => {
-    dispatch({ type: actionTypes.SIGN_IN_ERRORS, payload: response.data.errors });
+  .catch((error) => {
+    dispatch({ type: actionTypes.SIGN_IN_ERRORS, payload: error.response.data });
   });
 
 export const signUp = user => (dispatch) => {

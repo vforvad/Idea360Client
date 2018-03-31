@@ -2,6 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import nock from 'nock';
 import httpAdapter from 'axios/lib/adapters/http';
+import actionTypes from '../../actionTypes';
 import axios from '../../utils/axios';
 import config from '../../utils/environment';
 import {
@@ -21,13 +22,13 @@ describe('Authorization actions', () => {
   describe('#signIn', () => {
     describe('with valid attributes', () => {
       it('fires SIGN_IN action', () => {
+        const token = '123456';
         const store = mockStore({});
         const userParams = { email: 'example@text.com' };
-        const tokenParams = { token: '123456' };
+        const tokenParams = { token };
         const expectedActions = [
-          { type: 'SIGN_IN', payload: '123456' },
+          { type: actionTypes.SIGN_IN, payload: token },
         ];
-
         const currentUserParams = { current_User: { email: 'example@test.com' } };
 
         nock(config.baseURL)
@@ -44,9 +45,26 @@ describe('Authorization actions', () => {
       });
     });
 
+    describe('with valid attributes', () => {
+      it('receives a SIGN_IN_ERRORS action', () => {
+        const store = mockStore({});
+        const errors = { email: ['Does not exist'] };
+        const expectedActions = [
+          { type: actionTypes.SIGN_IN_ERRORS, payload: { errors } },
+        ];
 
-    describe('#signUp', () => {
-
+        nock(config.baseURL)
+          .post('/authorizations', {})
+          .reply(400, { errors });
+        return store.dispatch(signIn({}))
+          .then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+          });
+      });
     });
+  });
+
+  describe('#signUp', () => {
+
   });
 });
