@@ -11,16 +11,14 @@ export const currentUser = () => (dispatch) => {
     });
 };
 
-export const signIn = user => (dispatch) => {
-  axios.post('/authorizations', { ...user })
-    .then((response) => {
-      dispatch({ type: actionTypes.SIGN_IN, payload: response.data.token });
-      dispatch(currentUser());
-    })
-    .catch((response) => {
-      dispatch({ type: actionTypes.SIGN_IN_ERRORS, payload: response.data.errors });
-    });
-};
+export const signIn = user => dispatch => axios.post('/authorizations', { ...user })
+  .then((response) => {
+    dispatch({ type: actionTypes.SIGN_IN, payload: response.data.token });
+    dispatch(currentUser());
+  })
+  .catch((response) => {
+    dispatch({ type: actionTypes.SIGN_IN_ERRORS, payload: response.data.errors });
+  });
 
 export const signUp = user => (dispatch) => {
   axios.post('/registrations', { ...user })
