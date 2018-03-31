@@ -6,7 +6,7 @@ import actionTypes from '../../actionTypes';
 import axios from '../../utils/axios';
 import config from '../../utils/environment';
 import {
-  signIn,
+  signIn, signUp,
 } from '../../actions/authorization';
 
 const middlewares = [thunk];
@@ -65,6 +65,52 @@ describe('Authorization actions', () => {
   });
 
   describe('#signUp', () => {
+    describe('with valid attributes', () => {
+      it('fires a SIGN_UP action', () => {
+        const store = mockStore({});
+        const errors = { email: ['Does not exist'] };
+        const expectedActions = [
+          { type: actionTypes.SIGN_UP_ERRORS, payload: { errors } },
+        ];
+        const currentUserParams = { current_User: { email: 'example@test.com' } };
 
+        nock(config.baseURL)
+          .post('/registrations', {})
+          .reply(400, { errors });
+        nock(config.baseURL)
+          .get('/users/current')
+          .reply(200, currentUserParams);
+
+        return store.dispatch(signUp({}))
+          .then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+          });
+      });
+    });
+
+    describe('with invalid attributes', () => {
+      it('fires a SIGN_UP_ERRORS action', () => {
+        const token = '123456';
+        const store = mockStore({});
+        const userParams = { email: 'example@text.com' };
+        const tokenParams = { token };
+        const expectedActions = [
+          { type: actionTypes.SIGN_UP, payload: token },
+        ];
+        const currentUserParams = { current_User: { email: 'example@test.com' } };
+
+        nock(config.baseURL)
+          .post('/registrations', userParams)
+          .reply(200, tokenParams);
+        nock(config.baseURL)
+          .get('/users/current')
+          .reply(200, currentUserParams);
+
+        return store.dispatch(signUp({ email: 'example@text.com' }))
+          .then(() => {
+            expect(store.getActions()).toEqual(expectedActions);
+          });
+      });
+    });
   });
 });
