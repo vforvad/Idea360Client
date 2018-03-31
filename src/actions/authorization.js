@@ -1,7 +1,6 @@
 import axios from '../utils/axios';
 
 import actionTypes from '../actionTypes';
-import { setToken } from '../utils/token';
 
 export const currentUser = () => (dispatch) => {
   axios.get('/users/current')
@@ -15,16 +14,23 @@ export const currentUser = () => (dispatch) => {
 export const signIn = user => (dispatch) => {
   axios.post('/authorizations', { ...user })
     .then((response) => {
-      setToken(response.data.token);
+      dispatch({ type: actionTypes.SIGN_IN, payload: response.data.token });
       dispatch(currentUser());
+    })
+    .catch((response) => {
+      dispatch({ type: actionTypes.SIGN_IN_ERRORS, payload: response.data.errors });
     });
 };
 
-export const signUp = (user) => {
-  // return (dispatch) => {
+export const signUp = user => (dispatch) => {
   axios.post('/registrations', { ...user })
     .then((response) => {
-      setToken(response.data.token);
+      dispatch({ type: actionTypes.SIGN_UP, payload: response.data.token });
+      dispatch(currentUser());
+    })
+    .catch((response) => {
+      dispatch({
+        type: actionTypes.SIGN_UP_ERRORS, payload: response.data.errors,
+      });
     });
-  // };
 };
