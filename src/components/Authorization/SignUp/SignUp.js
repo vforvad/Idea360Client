@@ -1,12 +1,27 @@
 import CN from 'classnames';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { signUp } from '../../../actions/authorization';
 
 import Input from '../../UI/Input/Input';
 import { handleInputChange, required, isEmail, passwordMatch } from '../../../utils/validations';
 
-class SignUp extends Component {
+export class SignUp extends Component {
+  static propTypes = {
+    onSignUp: PropTypes.func.isRequired,
+    signUpErrors: PropTypes.shape({
+      email: PropTypes.arrayOf(PropTypes.string),
+      password: PropTypes.arrayOf(PropTypes.string),
+      passwordConfirmation: PropTypes.arrayOf(PropTypes.string),
+    }),
+  };
+
+  static defaultProps = {
+    signUpErrors: {},
+  };
+
   state = {
     signUpForm: {
       fields: {
@@ -57,15 +72,15 @@ class SignUp extends Component {
       password: form.password.value,
       password_confirmation: form.passwordConfirmation.value,
     };
-    signUp(params);
+    this.props.onSignUp(params);
   }
 
   render() {
     const { email, password, passwordConfirmation } = this.state.signUpForm.fields;
     const { valid } = this.state.signUpForm;
-    const emailErrors = this.state.signUpForm.errors.email;
-    const passwordErrors = this.state.signUpForm.errors.password;
-    const passwordConfirmationErrors = this.state.signUpForm.errors.passwordConfirmation;
+    const emailErrors = this.props.signUpErrors.email;
+    const passwordErrors = this.props.signUpErrors.password;
+    const passwordConfirmationErrors = this.props.signUpErrors.passwordConfirmation;
 
     return (
       <form className={CN('form', 'vertical')} onSubmit={this.handleSubmit}>
@@ -116,4 +131,22 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+/**
+ * Mapping dispatched functions to component's properties
+ * @param  {Object} dispatch Application dispatch function
+ * @return {Object} Mapped functions
+ */
+const mapDispatchToProps = dispatch => ({
+  onSignUp: user => dispatch(signUp(user)),
+});
+
+/**
+ * Mapping application state to component's properties
+ * @param  {Object} state Application state
+ * @return {Object} Mapped properties
+ */
+const mapStateToProps = state => ({
+  signUpErrors: state.authorization.signUpErrors,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

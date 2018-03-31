@@ -3,17 +3,19 @@ import { configure, mount, shallow } from 'enzyme';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 import Adapter from 'enzyme-adapter-react-16';
+
+import actionTypes from '../../../actionTypes';
 import baseStore from '../../../store';
-import ConnectedSignIn, { SignIn } from './SignIn';
+import ConnectedSignUp, { SignUp } from './SignUp';
 
 configure({ adapter: new Adapter() });
 
-describe('<SignIn />', () => {
-  const initialState = { authorization: { signInErrors: {}, currentUser: null } };
+describe('<SignUp />', () => {
+  const initialState = { authorization: { signUpErrors: {}, currentUser: null } };
   const mockStore = configureStore([]);
-  const loginMock = jest.fn();
+  const registerMock = jest.fn();
   const props = {
-    onSignIn: loginMock,
+    onSignUp: registerMock,
     store: null,
   };
 
@@ -26,7 +28,7 @@ describe('<SignIn />', () => {
     /* eslint-disable */
     providerWrapper = mount(
       <Provider store={store}>
-        <SignIn {...props} />
+        <SignUp {...props} />
       </Provider>
     );
     /* eslint-enable */
@@ -66,6 +68,18 @@ describe('<SignIn />', () => {
         .toEqual(passwordValue);
     });
 
+    it('fill the password confirmation field', () => {
+      const passwordValue = 'password';
+      const passwordConfirmationField = providerWrapper.find('input[name="passwordConfirmation"]').at(1);
+      passwordConfirmationField.simulate('change', {
+        target: {
+          name: 'passwordConfirmation', value: passwordValue,
+        },
+      });
+      expect(providerWrapper.find('input[name="passwordConfirmation"]').at(1).props().value)
+        .toEqual(passwordValue);
+    });
+
     it('submit the form', () => {
       providerWrapper.find('input[name="email"]').at(1).simulate('change', {
         target: {
@@ -77,9 +91,14 @@ describe('<SignIn />', () => {
           name: 'password', value: 'password',
         },
       });
+      providerWrapper.find('input[name="passwordConfirmation"]').at(1).simulate('change', {
+        target: {
+          name: 'passwordConfirmation', value: 'password',
+        },
+      });
 
       providerWrapper.find('form').simulate('submit');
-      expect(loginMock).toHaveBeenCalled();
+      expect(registerMock).toHaveBeenCalled();
     });
   });
 
@@ -87,15 +106,15 @@ describe('<SignIn />', () => {
     let wrapper;
     props.store = baseStore;
     beforeEach(() => {
-      wrapper = shallow(<ConnectedSignIn store={baseStore} onSignIn={loginMock} />);
+      wrapper = shallow(<ConnectedSignUp store={baseStore} onSignIn={registerMock} />);
     });
 
     it('save to props', () => {
-      const signInErrors = { email: ['Is not present'] };
-      baseStore.dispatch({ type: 'SIGN_IN_ERRORS', payload: signInErrors });
+      const signUpErrors = { email: ['Is not present'] };
+      baseStore.dispatch({ type: actionTypes.SIGN_UP_ERRORS, payload: signUpErrors });
       wrapper.update();
 
-      expect(wrapper.props().signInErrors).toEqual(signInErrors);
+      expect(wrapper.props().signUpErrors).toEqual(signUpErrors);
     });
   });
 });
